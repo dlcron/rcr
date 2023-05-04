@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      target: app
+    ports:
+      - "80:8000"
+    volumes:
+      - ./src:/app
+      - ./bin:/opt/bin
+      - ./data:/data
+    env_file:
+      - .env
+  dev:
+    build:
+      context: .
+      target: dev
+    volumes:
+      - .:/app/
+    env_file:
+      - .env

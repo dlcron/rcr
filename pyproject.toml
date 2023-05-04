@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "rcr"
+version = "0.0.0"
+description = ""
+authors = ["Marcin Maślany <marcinmaslany@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.95.1"
+uvicorn = "^0.22.0"
+gunicorn = "^20.1.0"
+pydantic = {extras = ["dotenv"], version = "^1.10.7"}
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.0.264"
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.3.1"
+httpx = "^0.24.0"
+
+[tool.ruff]
+
+line-length = 100
+
+# https://python-poetry.org/docs/pyproject/#poetry-and-pep-517
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
