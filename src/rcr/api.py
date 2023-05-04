@@ -22,7 +22,7 @@ async def compute_rcr(commands: models.CommandsIn) -> models.Status:
     response_model=models.CommandOut,
     summary="Get RCR for a given command",
 )
-async def get_command_result(command: models.Command):
+async def get_command_result(command: str):
     try:
         result = {"rcr": storage[command]}
     except KeyError:

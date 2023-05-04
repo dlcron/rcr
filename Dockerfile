@@ -10,14 +10,13 @@ COPY poetry.lock pyproject.toml README.md /app/
 COPY src /app/src/
 
 # Copy the rest of the application files
-COPY data /data/
 COPY bin /opt/bin/
 
 FROM base as app
 
 # Install dependencies using Poetry
 RUN poetry config virtualenvs.create false \
-    && poetry install --only-main --no-interaction --no-ansi
+    && poetry install --only main --no-interaction --no-ansi
 
 # Expose the port the app runs on
 EXPOSE 80
