@@ -1,4 +1,4 @@
-from typing import Literal, List
+from typing import Literal
 
 from pydantic import BaseModel
 
@@ -10,7 +10,7 @@ class Status(BaseModel):
 
 class CommandsIn(BaseModel):
 
-    commands: List[str]
+    commands: list[str]
 
 
 class CommandOut(BaseModel):

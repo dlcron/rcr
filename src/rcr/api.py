@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 
 from rcr import models
+from rcr.encoders import encode
 from rcr.storage import storage
 
 app = FastAPI()
@@ -11,10 +12,10 @@ app = FastAPI()
     response_model=models.Status,
     summary="Compute RCR for a list of commands",
 )
-async def compute_rcr(commands: models.CommandsIn) -> models.Status:
+async def compute_rcr(data_in: models.CommandsIn) -> models.Status:
     storage.clear()  # always clear the storage, so we don't have to worry about old values
-    storage[commands.commands[0]] = 1
-    return {"status": "OK"}
+    storage.update(encode(data_in.commands))
+    return models.Status(status="OK")
 
 
 @app.get(
@@ -22,9 +23,8 @@ async def compute_rcr(commands: models.CommandsIn) -> models.Status:
     response_model=models.CommandOut,
     summary="Get RCR for a given command",
 )
-async def get_command_result(command: str):
+async def get_command_result(command: str) -> models.CommandOut:
     try:
-        result = {"rcr": storage[command]}
+        return models.CommandOut(rcr=storage[command])
     except KeyError:
-        raise HTTPException(status_code=404, detail="Command not found")
-    return result
+        raise HTTPException(status_code=404, detail="Command not found") from None
